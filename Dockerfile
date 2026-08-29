@@ -7,10 +7,8 @@ RUN npm install
 
 COPY app/ .
 
-# Intentionally planted problem 3: Secret hardcoded
-ENV API_KEY=super-secret-key
-
-# Intentionally planted problem 2: Typo in variable name
-ENV LOGLEVEL=info
+# DATABASE_URL, LOG_LEVEL, API_KEY are provided at runtime
+# (--env-file .env for config, -e API_KEY=... for the secret) — never baked
+# into the image.
 
 CMD [ "npm", "start" ]
