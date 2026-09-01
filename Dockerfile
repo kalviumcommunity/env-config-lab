@@ -8,9 +8,9 @@ RUN npm install
 COPY app/ .
 
 # Intentionally planted problem 3: Secret hardcoded
-ENV API_KEY=super-secret-key
+# (Removed to be injected at runtime)
 
 # Intentionally planted problem 2: Typo in variable name
-ENV LOGLEVEL=info
+# (Removed to be injected at runtime via .env)
 
 CMD [ "npm", "start" ]
