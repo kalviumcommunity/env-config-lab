@@ -13,17 +13,30 @@ Use logs and environment inspection to diagnose the problem.
    docker build -t envlab .
    ```
 
-2. Run the container:
+2. Create a local configuration file and edit it with the non-secret values for
+   your environment:
    ```bash
-   docker run --name app envlab
+   cp .env.example .env
+   ```
+   `.env` is ignored by Git. Do not put a real API key in it: supply the key at
+   runtime instead.
+
+3. Run the container, injecting `API_KEY` from your shell environment:
+   ```bash
+   docker run --env-file .env -e API_KEY="$API_KEY" --name app envlab
+   ```
+
+4. Inspect startup and the runtime environment:
+   ```bash
+   docker logs app
+   docker exec app printenv
    ```
 
 ## Task
 
-1. The application fails to start. Diagnose the issue using `docker logs app` and fix it.
-2. Identify and resolve any configuration variable mismatches.
-3. Find and remove any hardcoded secrets. Use proper runtime injection.
-4. Ensure your local `.env` file (which you need to create) is not tracked by Git.
-5. Fill out `docs/cloud-run-template.md` categorizing variables correctly.
+`DATABASE_URL` and `LOG_LEVEL` are non-secret configuration, passed via `.env`.
+`API_KEY` is a secret and must be injected at runtime. See
+[`docs/cloud-run-template.md`](docs/cloud-run-template.md) for the Cloud Run
+equivalent using `--set-env-vars` and Secret Manager `--set-secrets`.
 
 Good luck!
