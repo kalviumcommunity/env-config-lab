@@ -7,10 +7,8 @@ RUN npm install
 
 COPY app/ .
 
-# Intentionally planted problem 3: Secret hardcoded
-ENV API_KEY=super-secret-key
-
-# Intentionally planted problem 2: Typo in variable name
-ENV LOGLEVEL=info
+# Fixed typo in variable name (LOGLEVEL -> LOG_LEVEL)
+# Note: Sensitive secrets (such as API_KEY) have been removed from the Dockerfile and are injected at runtime.
+ENV LOG_LEVEL=info
 
 CMD [ "npm", "start" ]
